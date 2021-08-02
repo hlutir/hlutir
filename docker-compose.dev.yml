@@ -1,0 +1,49 @@
+# This docker file is used for development of hlutir.
+# the `dev` container contains all the necessary
+# dependencies needed for development.
+
+version: "3"
+services:
+    dbp:
+        image: postgres
+        restart: unless-stopped
+        env_file: .env
+        networks:
+            - internal
+
+    dev:
+        build: .
+        restart: unless-stopped
+        ports:
+            - 3001:3000 # Expose API port to development machine.
+        volumes:
+            - ./:/workspace
+        networks:
+            - internal
+
+    mosquitto:
+        image: eclipse-mosquitto
+        restart: unless-stopped
+        ports:
+            - 1883:1883
+        volumes:
+            - ./config/mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+            - ./config/mosquitto/dynamic-security.json:/mosquitto/config/dynamic-security.json
+            - mosquitto-data:/mosquitto/data
+        networks:
+            - internal
+
+    nats:
+        image: nats
+        restart: unless-stopped
+        ports:
+            - 4222:4222
+            - 8222:8222
+        networks:
+            - internal
+
+networks:
+    internal:
+
+volumes:
+    mosquitto-data:
