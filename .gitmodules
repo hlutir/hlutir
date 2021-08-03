@@ -7,3 +7,9 @@
 [submodule "database"]
 	path = database
 	url = https://github.com/jonasclaes/hlutir-database.git
+[submodule "hlutir-common"]
+	path = hlutir-common
+	url = https://github.com/jonasclaes/hlutir-common.git
+[submodule "common"]
+	path = common
+	url = https://github.com/jonasclaes/hlutir-common.git
